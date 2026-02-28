@@ -1,0 +1,62 @@
+name: Build & Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install nbconvert
+        run: pip install nbconvert
+
+      - name: Create build directory
+        run: mkdir -p _site/notebooks
+
+      - name: Convert notebooks to HTML
+        run: |
+          for nb in notebooks/*.ipynb; do
+            jupyter nbconvert --to html --output-dir _site/notebooks "$nb"
+          done
+
+      - name: Copy site assets
+        run: |
+          cp index.html _site/
+          cp style.css _site/
+          cp -r glossary _site/
+          cp -r assets _site/
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

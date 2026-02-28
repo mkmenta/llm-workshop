@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LLM Context Window Visualizer</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ─── Header ─────────────────────────────────────────────────────── -->
+<header>
+  <h1>LLM Context Window Visualizer</h1>
+  <div class="controls">
+    <div class="flow-switch">
+      <button class="flow-btn active" id="flow1Btn" onclick="selectFlow(1)">Flow 1</button>
+      <button class="flow-btn"        id="flow2Btn" onclick="selectFlow(2)">Flow 2</button>
+    </div>
+    <button class="ctrl-btn" id="playBtn"  onclick="togglePlay()" title="Play / Pause">▶</button>
+    <button class="ctrl-btn" id="nextBtn"  onclick="nextStep()"   title="Next step">▶|</button>
+    <button class="ctrl-btn" id="resetBtn" onclick="reset()"      title="Reset">↺</button>
+    <button class="ctrl-btn" id="infoBtn"  onclick="toggleInfoPanel()" title="Learn">?</button>
+    <div class="lang-wrap" id="langWrap">
+      <button class="lang-btn" id="langBtn" onclick="toggleLangMenu()" title="Switch language">
+        <span id="langFlag">🇪🇸</span><span class="lang-chevron">▾</span>
+      </button>
+      <div class="lang-menu" id="langMenu">
+        <button class="lang-option"        id="langOptEN" onclick="switchLanguage('en')">🇺🇸 English</button>
+        <button class="lang-option active" id="langOptES" onclick="switchLanguage('es')">🇪🇸 Español</button>
+      </div>
+    </div>
+    <div class="speed-wrap">
+      <span>speed</span>
+      <input type="range" id="speedSlider" min="400" max="3000" value="1500" step="100" />
+    </div>
+  </div>
+</header>
+
+<!-- ─── Main content area ──────────────────────────────────────────── -->
+<div class="main">
+
+  <!-- LEFT SIDEBAR: Transcript -->
+  <div class="transcript-wrap" id="transcriptWrap">
+    <div class="transcript-header">Conversation</div>
+    <div class="transcript-entries" id="transcript"></div>
+  </div>
+
+  <!-- RESIZE HANDLE -->
+  <div class="resize-handle" id="resizeHandle"></div>
+
+  <!-- STAGE: three actor columns -->
+  <div class="stage" id="stage">
+
+    <!-- Arrow SVG layer -->
+    <div id="arrowLayer"></div>
+
+    <!-- LEFT: User -->
+    <div class="col col-left">
+      <div class="actor-card" id="userCard">
+        <div class="actor-icon">👤</div>
+        <div class="actor-label">User</div>
+      </div>
+    </div>
+
+    <!-- CENTER: LLM + Context Bar -->
+    <div class="col col-center">
+      <div class="actor-card" id="llmCard">
+        <div class="actor-icon">🤖</div>
+        <div class="actor-label">LLM</div>
+        <div class="status-badge" id="statusBadge">idle</div>
+      </div>
+
+      <div class="bar-wrap">
+        <div class="bar-label">Context Window</div>
+        <div class="bar-container" id="barContainer">
+          <!-- segments injected here -->
+          <div class="overflow-spill" id="overflowSpill">▼ overflow</div>
+        </div>
+        <div class="bar-stats">
+          <div class="bar-pct" id="barPct">0%</div>
+          <div class="bar-tokens" id="barTokens">0 / 8,192 tokens</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Tool -->
+    <div class="col col-right">
+      <div class="actor-card" id="toolCard">
+        <div class="actor-icon">🔧</div>
+        <div class="actor-label">Tool</div>
+      </div>
+    </div>
+
+    <div class="step-indicator" id="stepIndicator">step — / —</div>
+  </div>
+
+  <!-- RIGHT RESIZE HANDLE -->
+  <div class="resize-handle resize-handle-right" id="resizeHandleRight"></div>
+
+  <!-- RIGHT SIDEBAR: Info panel -->
+  <div class="info-panel" id="infoPanel">
+    <div class="info-panel-header">
+      <span class="info-panel-title" id="infoPanelTitle">About</span>
+      <button class="info-panel-close" onclick="toggleInfoPanel()">✕</button>
+    </div>
+    <div class="info-panel-content" id="infoPanelContent">
+      <!-- placeholder -->
+    </div>
+  </div>
+
+</div>
+
+<!-- ─── Modal ─────────────────────────────────────────────────────── -->
+<div id="modalOverlay">
+  <div class="modal" id="modal">
+    <div class="modal-title" id="modalTitle"></div>
+    <div class="modal-desc"  id="modalDesc"></div>
+    <div class="modal-options" id="modalOptions"></div>
+  </div>
+</div>
+
+<script src="strings.en.js"></script>
+<script src="strings.es.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
