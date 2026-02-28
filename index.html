@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LLM Workshop</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <nav class="sidebar">
+    <div class="sidebar-header">
+      <span class="sidebar-icon">🤖</span>
+      <span class="sidebar-title">LLM Workshop</span>
+      <button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()" title="Toggle sidebar">‹</button>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-label">Notebooks</div>
+      <a class="nav-item" href="#" data-src="notebooks/1-llm_internals.html" onclick="loadContent(this)">
+        <span class="nav-item-icon">📓</span>
+        <span>1. LLM Internals</span>
+      </a>
+      <a class="nav-item" href="#" data-src="notebooks/2-llm_training.html" onclick="loadContent(this)">
+        <span class="nav-item-icon">📓</span>
+        <span>2. LLM Training</span>
+      </a>
+      <a class="nav-item" href="#" data-src="notebooks/EX-llm_extras.html" onclick="loadContent(this)">
+        <span class="nav-item-icon">📓</span>
+        <span>Extras</span>
+      </a>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-label">Glossary</div>
+      <a class="nav-item" href="#" data-src="glossary/context_window/index.html" onclick="loadContent(this)">
+        <span class="nav-item-icon">📐</span>
+        <span>Context Window</span>
+      </a>
+    </div>
+
+    <div class="sidebar-footer">
+      <a class="sidebar-footer-link" href="https://github.com/mkmenta/llm-workshop" target="_blank" rel="noopener">
+        <svg class="gh-icon" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+          <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38
+            0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13
+            -.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66
+            .07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15
+            -.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27
+            .68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12
+            .51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48
+            0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+        </svg>
+        GitHub
+      </a>
+    </div>
+  </nav>
+
+  <main class="content">
+    <div class="welcome" id="welcome">
+      <div class="welcome-icon">🤖</div>
+      <h1 class="welcome-title">LLM Workshop</h1>
+      <p class="welcome-sub">Interactive notebooks and visualizations about Large Language Models.</p>
+      <div class="welcome-cards">
+        <div class="welcome-card">
+          <div class="welcome-card-icon">📓</div>
+          <div class="welcome-card-label">3 Notebooks</div>
+          <div class="welcome-card-desc">Step-by-step code explaining how LLMs work and are trained.</div>
+        </div>
+        <div class="welcome-card">
+          <div class="welcome-card-icon">📐</div>
+          <div class="welcome-card-label">Glossary</div>
+          <div class="welcome-card-desc">Interactive visualizations for key LLM concepts.</div>
+        </div>
+      </div>
+      <p class="welcome-hint">← Select an item from the sidebar</p>
+    </div>
+    <iframe id="contentFrame" src="" title="Content"></iframe>
+  </main>
+
+  <script>
+    function loadContent(el) {
+      event.preventDefault();
+      document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+      el.classList.add('active');
+      const frame = document.getElementById('contentFrame');
+      const welcome = document.getElementById('welcome');
+      frame.src = el.dataset.src;
+      welcome.style.display = 'none';
+      frame.style.display = 'block';
+    }
+
+    function toggleSidebar() {
+      const sidebar = document.querySelector('.sidebar');
+      const btn = document.getElementById('sidebarToggle');
+      const collapsed = sidebar.classList.toggle('collapsed');
+      btn.textContent = collapsed ? '›' : '‹';
+      btn.title = collapsed ? 'Expand sidebar' : 'Collapse sidebar';
+      localStorage.setItem('sidebarCollapsed', collapsed);
+    }
+
+    (function restoreSidebar() {
+      if (localStorage.getItem('sidebarCollapsed') === 'true') {
+        document.querySelector('.sidebar').classList.add('collapsed');
+        const btn = document.getElementById('sidebarToggle');
+        btn.textContent = '›';
+        btn.title = 'Expand sidebar';
+      }
+    })();
+  </script>
+
+</body>
+</html>
