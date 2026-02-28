@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,7 +12,7 @@
     <div class="sidebar-header">
       <span class="sidebar-icon">🤖</span>
       <span class="sidebar-title">LLM Workshop</span>
-      <button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()" title="Toggle sidebar">‹</button>
+      <button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()" title="Ocultar barra lateral">‹</button>
     </div>
 
     <div class="nav-section">
@@ -32,10 +32,10 @@
     </div>
 
     <div class="nav-section">
-      <div class="nav-section-label">Glossary</div>
+      <div class="nav-section-label">Glosario</div>
       <a class="nav-item" href="#" data-src="glossary/context_window/index.html" onclick="loadContent(this)">
         <span class="nav-item-icon">📐</span>
-        <span>Context Window</span>
+        <span>Ventana de Contexto</span>
       </a>
     </div>
 
@@ -60,10 +60,10 @@
     <div class="welcome" id="welcome">
       <div class="welcome-icon">🤖</div>
       <h1 class="welcome-title">LLM Workshop</h1>
-      <p class="welcome-sub">Interactive notebooks and visualizations about Large Language Models.</p>
-      <p class="welcome-hint">← Select an item from the sidebar</p>
+      <p class="welcome-sub">Notebooks interactivos y visualizaciones sobre Modelos de Lenguaje Grandes.</p>
+      <p class="welcome-hint">← Selecciona un elemento de la barra lateral</p>
     </div>
-    <iframe id="contentFrame" src="" title="Content"></iframe>
+    <iframe id="contentFrame" src="" title="Contenido"></iframe>
   </main>
 
   <script>
@@ -83,7 +83,7 @@
       const btn = document.getElementById('sidebarToggle');
       const collapsed = sidebar.classList.toggle('collapsed');
       btn.textContent = collapsed ? '›' : '‹';
-      btn.title = collapsed ? 'Expand sidebar' : 'Collapse sidebar';
+      btn.title = collapsed ? 'Expandir barra lateral' : 'Ocultar barra lateral';
       localStorage.setItem('sidebarCollapsed', collapsed);
     }
 
@@ -92,7 +92,7 @@
         document.querySelector('.sidebar').classList.add('collapsed');
         const btn = document.getElementById('sidebarToggle');
         btn.textContent = '›';
-        btn.title = 'Expand sidebar';
+        btn.title = 'Expandir barra lateral';
       }
     })();
   </script>

@@ -1,6 +1,8 @@
 # LLM Workshop
 
-Este repositorio contiene código y contenido organizado en Jupyter Notebooks para explicar el funcionamiento de los Large Language Models (LLM) y su entrenamiento.
+Este repositorio contiene código y contenido organizado en Jupyter Notebooks para explicar el funcionamiento de los Large Language Models (LLM) y su entrenamiento, además de algunos conceptos importantes.
+
+Se puede visualizar el contenido abriendo directamente los Jupyter Notebooks o viendo una versión estática en HTML en [https://mkmenta.github.io/llm-workshop/](https://mkmenta.github.io/llm-workshop/).
 
 ## Licencia
 
