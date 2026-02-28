@@ -43,7 +43,7 @@ jobs:
           cp index.html _site/
           cp style.css _site/
           cp -r glossary _site/
-          cp -r assets _site/
+          if [ -d notebooks/assets ]; then cp -r notebooks/assets _site/notebooks/; fi
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
